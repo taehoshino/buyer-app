@@ -32,7 +32,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\n    \"name\": \"Tae\", \n    \"email\": \"wildsheepchase0211@gmail.com \", \n    \"password\": \"pasward123!!\", \n    \"address\": \"19 Hornsey Rd, Homebush West NSW 2140\"\n}",
+          "raw": "{\n    \"name\": \"Tae\", \n    \"email\": \"youremail@example.com \", \n    \"password\": \"pasward123!!\", \n    \"address\": \"12 what\"\n}",
           "options": {
             "raw": {
               "language": "json"
