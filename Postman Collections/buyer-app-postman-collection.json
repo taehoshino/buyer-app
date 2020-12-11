@@ -1,0 +1,337 @@
+{
+  "info": {
+    "_postman_id": "f75368a2-1f7e-4f60-8d2e-ce9ed33f7c9c",
+    "name": "Buyer App",
+    "description": "# Overview\nBuyer app has the following CRUD fuunctionalities on database (mongoDB):\n- Register (create) user\n- Register (create) shopping items\n- Login\n- Logout\n- Read items/user profile\n- Update items/user profile\n- Delete items/user\n\n# Domain\nhttps://taehoshino-buyer-app.herokuapp.com\n\n# Use case\nIf a registered user goes out for shopping, the API endpoint /users/me/shopping?on=true is called. \nThis endpoint obtains a list of users whose addresses are nearby (within 5km), and also filter out any users with no items in their shopping list.\nThen it sends off email notifications to the neighbors and the shopper telling what to buy. ",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create user",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "80ddb7b2-bd51-40c8-b42c-609032ff4b1c",
+            "exec": [
+              "if (pm.response.code == 201) {",
+              "    pm.environment.set(\"authToken\", pm.response.json().token)",
+              "}",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "_postman_id": "a9f8111c-cc9b-4c69-b2a3-db3746673996",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\": \"Tae\", \n    \"email\": \"wildsheepchase0211@gmail.com \", \n    \"password\": \"pasward123!!\", \n    \"address\": \"19 Hornsey Rd, Homebush West NSW 2140\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{url}}/users"
+      },
+      "response": []
+    },
+    {
+      "name": "Create item",
+      "_postman_id": "ceb381da-b8cc-46b8-8c5f-d81807366843",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"name\" : \"Tomatoes\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{url}}/items"
+      },
+      "response": []
+    },
+    {
+      "name": "Login user",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "de367138-b42a-4046-b41f-36e9734f900e",
+            "exec": [
+              "if (pm.response.code == 200) {",
+              "    pm.environment.set(\"authToken\", pm.response.json().token)",
+              "}",
+              ""
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "_postman_id": "1d5283cb-b465-4bd1-9933-f373fed896cd",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"youremail@example.com\", \n    \"password\": \"password123!!\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{url}}/users/login"
+      },
+      "response": []
+    },
+    {
+      "name": "Logout user",
+      "_postman_id": "9c1d38f5-82ce-4818-a7bf-ec071d817399",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": "{{url}}/users/logout"
+      },
+      "response": []
+    },
+    {
+      "name": "Logout all",
+      "_postman_id": "00cc84f6-2169-42a3-a7fa-a2630e3ec7d4",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": "{{url}}/users/logoutALL"
+      },
+      "response": []
+    },
+    {
+      "name": "Read user",
+      "_postman_id": "75c9a711-de6e-49de-917e-940c31cd4daa",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{url}}/users/me"
+      },
+      "response": []
+    },
+    {
+      "name": "Read items",
+      "_postman_id": "0f4d4bb7-6639-47e5-84a8-b7b3f3083ab3",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/items?sortBy=createdAt:asc&completed=false",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "items"
+          ],
+          "query": [
+            {
+              "key": "sortBy",
+              "value": "createdAt:asc"
+            },
+            {
+              "key": "completed",
+              "value": "false"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update user",
+      "_postman_id": "eddb2b8e-c257-4288-8ccf-c61008383480",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"password\": \"pasword12345!!\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{url}}/users/me"
+      },
+      "response": []
+    },
+    {
+      "name": "Update shopping status",
+      "_postman_id": "8c0930ad-a3c8-4ed4-8d39-79e70894307f",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/users/me/shopping?on=true",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "users",
+            "me",
+            "shopping"
+          ],
+          "query": [
+            {
+              "key": "on",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update item",
+      "_postman_id": "cc1db57f-3bdd-4823-944b-002fc7e29e7b",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"completed\": true\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{url}}/items/:id",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "items",
+            ":id"
+          ],
+          "variable": [
+            {
+              "id": "b2642245-cb00-4d73-83e1-9576e302eb4d",
+              "key": "id",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Delete user",
+      "_postman_id": "e58e1de7-2c9c-448f-971c-512f2445b5f8",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{url}}/users/me"
+      },
+      "response": []
+    },
+    {
+      "name": "Delete item",
+      "_postman_id": "8d9c0d93-2a95-48bf-87ad-dcbd31fdf85d",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{url}}/items/:id",
+          "host": [
+            "{{url}}"
+          ],
+          "path": [
+            "items",
+            ":id"
+          ],
+          "variable": [
+            {
+              "id": "5f4a0521-8acd-4cd1-962b-a207e2b15ece",
+              "key": "id",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": {
+      "token": "{{authToken}}"
+    }
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "0efd474d-6d43-4e93-9ec5-3f5565ad423e",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "c3acdf76-4c4a-4782-8fcd-0d0b7a846b08",
+        "type": "text/javascript",
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}
